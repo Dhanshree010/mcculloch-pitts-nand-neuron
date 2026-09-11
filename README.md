@@ -1,9 +1,15 @@
 # McCulloch-Pitts Neuron for NAND Gate & Universal Computation
 
+[![GitHub Pages Deployment](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-brightgreen?style=for-the-badge&logo=github)](https://dhanshree010.github.io/mcculloch-pitts-nand-neuron/)
+[![Python](https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python)](https://python.org)
+[![HTML5 / CSS3 / JS](https://img.shields.io/badge/Web%20Lab-HTML5%20%7C%20CSS3%20%7C%20JS-orange?style=for-the-badge)](https://dhanshree010.github.io/mcculloch-pitts-nand-neuron/)
+
 > **Course:** Neural Networks and Deep Learning  
 > **Topic:** Project-Based Learning (PBL)  
+> **Live Demo:** [https://dhanshree010.github.io/mcculloch-pitts-nand-neuron/](https://dhanshree010.github.io/mcculloch-pitts-nand-neuron/)  
 > **Author:** Antigravity AI & Student  
 > **Repository Scope:** Python Implementation, Mathematical Derivations, Interactive Visual Web Lab, and Real-World Safety System Project.
+
 
 ---
 
