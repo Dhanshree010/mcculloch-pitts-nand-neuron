@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "styles.css", "use": "@vercel/static" },
+    { "src": "app.js", "use": "@vercel/static" },
+    { "src": "McCulloch_Pitts_NAND_Neuron_Project_Report.pdf", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/styles.css", "dest": "/styles.css" },
+    { "src": "/app.js", "dest": "/app.js" },
+    { "src": "/McCulloch_Pitts_NAND_Neuron_Project_Report.pdf", "dest": "/McCulloch_Pitts_NAND_Neuron_Project_Report.pdf" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
