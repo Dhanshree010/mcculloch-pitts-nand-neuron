@@ -3,16 +3,23 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import os
+
 from mcculloch_pitts_nand import (
     McCullochPittsNeuron,
-    NANDNeuron,
-    mp_not_gate,
-    mp_and_gate,
-    mp_or_gate,
-    mp_xor_gate,
-    mp_xnor_gate,
-    IndustrialSafetySystem
+    create_nand_neuron,
+    create_and_neuron,
+    create_or_neuron,
+    create_not_neuron,
+    NANDUniversalSynthesizer,
+    IndustrialPressSafetySystem
 )
+
+# Convenience aliases
+mp_not_gate = NANDUniversalSynthesizer.NOT
+mp_and_gate = NANDUniversalSynthesizer.AND
+mp_or_gate = NANDUniversalSynthesizer.OR
+mp_xor_gate = NANDUniversalSynthesizer.XOR
+mp_xnor_gate = NANDUniversalSynthesizer.XNOR
 
 # Page configuration
 st.set_page_config(
@@ -243,7 +250,6 @@ elif "3. Universal Logic Synthesizer" in tab_choice:
         st.subheader("Input Values")
         if "NOT" in gate_choice:
             in_a = st.radio("Input X", [0, 1], horizontal=True)
-            in_b = in_a
             out = mp_not_gate(in_a)
         else:
             in_a = st.radio("Input X1", [0, 1], horizontal=True)
@@ -317,21 +323,21 @@ elif "4. Industrial Safety Project" in tab_choice:
         btn_val = 1 if buttons else 0
         estop_val = 1 if estop else 0
         
-        system = IndustrialSafetySystem()
-        result = system.evaluate(guard_val, btn_val, estop_val)
+        system = IndustrialPressSafetySystem()
+        result = system.evaluate_system(guard_val, btn_val, estop_val)
         
     with col_sim2:
         st.subheader("⚙️ Real-time Neural Interlock Status")
         
-        st.markdown(f"**Stage 1 (Operational Clearance AND Gate):** `Output = {result['stage1_clearance']}`")
-        st.markdown(f"**Stage 2 (Inhibitory Interlock with E-Stop):** `Output = {result['press_clearance']}`")
+        st.markdown(f"**Stage 1 (Operational Clearance AND Gate):** `Signal = {result['normal_clearance_signal']}`")
+        st.markdown(f"**Stage 2 (Inhibitory Interlock with E-Stop):** `Permission = {result['press_permission']}`")
         
-        if result['safe_to_operate']:
-            st.success("🟢 **PRESS AUTHORIZED & OPERATING SAFELY**\n\nAll safety interlocks satisfied. Ram cycle cleared.")
+        if result['press_permission'] == 1:
+            st.success(f"🟢 **{result['status_message']}**\n\nAll safety interlocks satisfied. Ram cycle cleared.")
         elif estop_val == 1:
-            st.error("🛑 **EMERGENCY STOP SHUTDOWN IN EFFECT!**\n\nInhibitory synapse instantly clamped motor drive to 0.")
+            st.error(f"🛑 **{result['status_message']}**\n\nInhibitory synapse instantly clamped motor drive to 0.")
         else:
-            st.warning("⚠️ **SAFETY HAZARD: Press Inhibited!**\n\nEnsure guard door is closed and both operator buttons are pressed.")
+            st.warning(f"⚠️ **{result['status_message']}**\n\nEnsure guard door is closed and both operator buttons are pressed.")
             
         st.markdown("---")
         st.caption("Neural Architecture: 2 MP NAND Neurons forming AND gate + 1 MP Inhibitory Interlock Neuron.")
